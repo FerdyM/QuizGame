@@ -3,21 +3,58 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AuthorQuiz from './AuthorQuiz';
 import * as serviceWorker from './serviceWorker';
+import {shuffle, sample} from 'underscore';
 
 const authors = [
   {
     name: 'Mark Twain',
     imageUrl: 'images/beach.svg',
     imageSource: 'Wikipedia commons',
-    books: ['The adventures of huckleberry']
+    books: [
+      'The adventures of huckleberry',
+      'book2',
+      'book3'
+    ]
+  },
+  {
+    name: 'Mark Twain2',
+    imageUrl: 'images/beach.svg',
+    imageSource: 'Wikipedia commons',
+    books: [
+      'The adventures of huckleberry2',
+      'book22',
+      'book32'
+    ]
+  },
+  {
+    name: 'Mark Twain3',
+    imageUrl: 'images/beach.svg',
+    imageSource: 'Wikipedia commons',
+    books: [
+      'The adventures of huckleberry3',
+      'book23',
+      'book33'
+    ]
   }
 ];
 
-const state = {
-  turnData: {
-    author: authors[0],
-    books: authors[0].books
+function getTurnData(authors) {
+  const allBooks = authors.reduce(function (p, c, i) {
+    return p.concat(c.books);
+  }, []);
+  const fourRandomBooks = shuffle(allBooks).slice(0, 4);
+  const answer = sample(fourRandomBooks)
+
+  return {
+    books: fourRandomBooks,
+    author: authors.find((author) => 
+      author.books.some((title) => 
+        title === answer))
   }
+}
+
+const state = {
+  turnData: getTurnData(authors)
 };
 
 ReactDOM.render(
