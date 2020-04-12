@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import './index.css';
 import AuthorQuiz from './AuthorQuiz';
 import * as serviceWorker from './serviceWorker';
@@ -63,14 +64,33 @@ function onAnswerSelected(answer) {
   const isCorrect = state.turnData.author.books.some((book) => book === answer);
   state.highlight = isCorrect ? 'correct' : 'wrong';
 
+  goonk();
 }
+
+function AddAuthorForm({match}) {
+  return (
+    <div>
+      <h1>Add Author</h1>
+      <p>{JSON.stringify(match)}</p>
+    </div>
+  )
+}
+
+function App() {
+  return <AuthorQuiz onAnswerSelected={onAnswerSelected} {...state}/>
+}
+function goonk() {
   ReactDOM.render(
     <React.StrictMode>
-      <AuthorQuiz onAnswerSelected={onAnswerSelected} {...state}/>
+      <BrowserRouter >
+        <Route exact path="/" component={App} />
+        <Route path="/add" component={AddAuthorForm} />
+      </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
   );
-
+}
+goonk();
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

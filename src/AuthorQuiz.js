@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types';
 import './App.css';
 import './bootstrap.min.css'
 
@@ -43,6 +45,18 @@ function Turn({author, books, highlight, onAnswerSelected}) {
   )
 }
 
+Turn.propTypes = {
+  author: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    imageSource: PropTypes.string.isRequired,
+    books: PropTypes.arrayOf(PropTypes.string).isRequired
+  }),
+  books: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onAnswerSelected: PropTypes.func.isRequired,
+  highlight: PropTypes.string.isRequired
+}
+
 function Continue() {
   return (
     <div></div>
@@ -64,6 +78,7 @@ function AuthorQuiz({turnData, highlight, onAnswerSelected}) {
       <Hero />
       <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected} />
       <Continue />
+      <p><Link to="/add" >Add an Author</Link></p>
       <Footer />
     </div>
   );
