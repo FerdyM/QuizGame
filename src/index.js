@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './index.css';
 import AuthorQuiz from './AuthorQuiz';
 import * as serviceWorker from './serviceWorker';
@@ -56,10 +56,14 @@ function getTurnData(authors) {
   }
 }
 
-const state = {
-  turnData: getTurnData(authors),
-  highlight: ''
-};
+function resetState() {
+  return {
+    turnData: getTurnData(authors),
+    highlight: ''
+  }
+}
+
+let state = resetState();
 
 function onAnswerSelected(answer) {
   const isCorrect = state.turnData.author.books.some((book) => book === answer);
@@ -67,12 +71,26 @@ function onAnswerSelected(answer) {
 
   goonk();
 }
-function AuthorWrapper() {
-  return <AddAuthorForm onAddAuthor={console.log} />
+
+function onContinue() {
+  state = resetState()
+  goonk()
 }
 
+const AuthorWrapper = withRouter(({ history }) =>  
+  <AddAuthorForm onAddAuthor={(author) => {
+    authors.push(author);
+    history.push('/');
+  }} />
+)
+
+
 function App() {
-  return <AuthorQuiz onAnswerSelected={onAnswerSelected} {...state}/>
+  return <AuthorQuiz 
+      onAnswerSelected={onAnswerSelected} 
+      onContinue={onContinue}
+      {...state}
+    />
 }
 function goonk() {
   ReactDOM.render(
