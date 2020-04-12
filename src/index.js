@@ -5,6 +5,7 @@ import './index.css';
 import AuthorQuiz from './AuthorQuiz';
 import * as serviceWorker from './serviceWorker';
 import {shuffle, sample} from 'underscore';
+import AddAuthorForm from './AddAuthorForm';
 import { render } from '@testing-library/react';
 
 const authors = [
@@ -66,14 +67,8 @@ function onAnswerSelected(answer) {
 
   goonk();
 }
-
-function AddAuthorForm({match}) {
-  return (
-    <div>
-      <h1>Add Author</h1>
-      <p>{JSON.stringify(match)}</p>
-    </div>
-  )
+function AuthorWrapper() {
+  return <AddAuthorForm onAddAuthor={console.log} />
 }
 
 function App() {
@@ -84,7 +79,7 @@ function goonk() {
     <React.StrictMode>
       <BrowserRouter >
         <Route exact path="/" component={App} />
-        <Route path="/add" component={AddAuthorForm} />
+        <Route path="/add" component={AuthorWrapper} />
       </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
