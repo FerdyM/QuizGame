@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './index.css';
+import * as Redux from 'redux'
+import * as ReactRedux from 'react-redux'
 import AuthorQuiz from './AuthorQuiz';
 import * as serviceWorker from './serviceWorker';
 import {shuffle, sample} from 'underscore';
@@ -63,19 +65,29 @@ function resetState() {
   }
 }
 
-let state = resetState();
-
-function onAnswerSelected(answer) {
-  const isCorrect = state.turnData.author.books.some((book) => book === answer);
-  state.highlight = isCorrect ? 'correct' : 'wrong';
-
-  goonk();
+function reducer(state = {authors, turnData: getTurnData(authors), highlight: ''}, action) {
+  switch(action.type) {
+    case 'ANSWER_SELECTED':
+      const isCorrect = state.turnData.author.books.some((book) => book === action.answer);
+      return Object.assign(
+        {},
+        state, {
+          highlight: isCorrect ? 'correct' : 'wrong'
+        })
+    case 'CONTINUE':
+      return Object.assign(
+        {},
+        state, {
+          hightlight: '',
+          turnData: getTurnData(state.authors),
+        }
+      )
+    default: return state;
+  }
 }
 
-function onContinue() {
-  state = resetState()
-  goonk()
-}
+let store = Redux.createStore(reducer);
+
 
 const AuthorWrapper = withRouter(({ history }) =>  
   <AddAuthorForm onAddAuthor={(author) => {
@@ -86,24 +98,21 @@ const AuthorWrapper = withRouter(({ history }) =>
 
 
 function App() {
-  return <AuthorQuiz 
-      onAnswerSelected={onAnswerSelected} 
-      onContinue={onContinue}
-      {...state}
-    />
+  return <ReactRedux.Provider store={store} >
+      <AuthorQuiz />
+    </ReactRedux.Provider>
 }
-function goonk() {
-  ReactDOM.render(
-    <React.StrictMode>
-      <BrowserRouter >
-        <Route exact path="/" component={App} />
-        <Route path="/add" component={AuthorWrapper} />
-      </BrowserRouter>
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
-}
-goonk();
+
+ReactDOM.render(
+  <React.StrictMode>
+    <BrowserRouter >
+      <Route exact path="/" component={App} />
+      <Route path="/add" component={AuthorWrapper} />
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
