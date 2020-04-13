@@ -4,18 +4,17 @@ import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './index.css';
 import * as Redux from 'redux'
 import * as ReactRedux from 'react-redux'
-import AuthorQuiz from './AuthorQuiz';
+import FounderQuiz from './FounderQuiz';
 import * as serviceWorker from './serviceWorker';
 import {shuffle, sample} from 'underscore';
-import AddAuthorForm from './AddAuthorForm';
-import { render } from '@testing-library/react';
+import AddFounderForm from './AddFounderForm';
 
-const authors = [
+const founders = [
   {
     name: 'Elon Musk',
     imageUrl: require('./images/elon.jpg'),
     imageSource: 'Wikipedia commons',
-    books: [
+    companies: [
       'Tesla',
       'SpaceX',
       'The Boring Company',
@@ -26,7 +25,7 @@ const authors = [
     name: 'Mark Zuckerberg',
     imageUrl: require('./images/mark.jpg'),
     imageSource: 'Wikipedia commons',
-    books: [
+    companies: [
       'Facebook',
     ]
   },
@@ -34,7 +33,7 @@ const authors = [
     name: 'Bill Gates',
     imageUrl: require('./images/bill.jpg'),
     imageSource: 'Wikipedia commons',
-    books: [
+    companies: [
       'Microsoft',
       'Gates Foundation',
     ]
@@ -43,38 +42,31 @@ const authors = [
     name: 'Daniel EK',
     imageUrl: require('./images/daniel.jpg'),
     imageSource: 'Wikipedia commons',
-    books: [
+    companies: [
       'Spotify',
     ]
   }
 ];
 
-function getTurnData(authors) {
-  const allBooks = authors.reduce(function (p, c, i) {
-    return p.concat(c.books);
+function getTurnData(founders) {
+  const allCompanies = founders.reduce(function (p, c, i) {
+    return p.concat(c.companies);
   }, []);
-  const fourRandomBooks = shuffle(allBooks).slice(0, 4);
-  const answer = sample(fourRandomBooks)
+  const fourRandomCompanies = shuffle(allCompanies).slice(0, 4);
+  const answer = sample(fourRandomCompanies)
 
   return {
-    books: fourRandomBooks,
-    author: authors.find((author) => 
-      author.books.some((title) => 
+    companies: fourRandomCompanies,
+    founder: founders.find((founder) => 
+      founder.companies.some((title) => 
         title === answer))
   }
 }
 
-function resetState() {
-  return {
-    turnData: getTurnData(authors),
-    highlight: ''
-  }
-}
-
-function reducer(state = {authors, turnData: getTurnData(authors), highlight: ''}, action) {
+function reducer(state = {founders, turnData: getTurnData(founders), highlight: ''}, action) {
   switch(action.type) {
     case 'ANSWER_SELECTED':
-      const isCorrect = state.turnData.author.books.some((book) => book === action.answer);
+      const isCorrect = state.turnData.founder.companies.some((company) => company === action.answer);
       return Object.assign(
         {},
         state, {
@@ -85,14 +77,14 @@ function reducer(state = {authors, turnData: getTurnData(authors), highlight: ''
         {},
         state, {
           hightlight: '',
-          turnData: getTurnData(state.authors),
+          turnData: getTurnData(state.founders),
         }
       )
     case 'ADD_AUTHOR':
       return Object.assign(
         {},
         state, {
-          authors: state.authors.concat([action.author])
+          founders: state.founders.concat([action.founder])
         }
       )
     default: return state;
@@ -105,8 +97,8 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter >
       <ReactRedux.Provider store={store} >
-        <Route exact path="/" component={AuthorQuiz} />
-        <Route path="/add" component={AddAuthorForm} />
+        <Route exact path="/" component={FounderQuiz} />
+        <Route path="/add" component={AddFounderForm} />
       </ReactRedux.Provider>
     </BrowserRouter>
   </React.StrictMode>,

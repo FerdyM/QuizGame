@@ -1,9 +1,8 @@
 import React from 'react'; 
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
 import './AddAuthorForm.css'
 
-class AuthorForm extends React.Component {
+class FounderForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +34,7 @@ class AuthorForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="AddAuthorForm_input">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Founder Name</label>
                     <input type="text" name="name" value={this.state.name} onChange={this.onFieldChange}/>
                 </div>
                 <div className="AddAuthorForm_input">
@@ -44,7 +43,7 @@ class AuthorForm extends React.Component {
                 </div>
                 <div className="AddAuthorForm_input">
                     {this.state.books.map((book) => <p key={book}>{book}</p>)}
-                    <label htmlFor="bookTemp">Books</label>
+                    <label htmlFor="bookTemp">Companies</label>
                     <input type="text" name="bookTemp" value={this.state.bookTemp} onChange={this.onFieldChange}/>
                     <input type="button" value="+" onClick={this.handleAddBook} />
                 </div>
@@ -64,13 +63,13 @@ function mapDispatchToProps(dispatch, props) {
 
 }
 
-function AddAuthorForm({match, onAddAuthor}) {
+function AddFounderForm({match, onAddAuthor}) {
     return (
       <div className="AddAuthorForm">
-        <h1>Add Author</h1>
-        <AuthorForm onAddAuthor={onAddAuthor}/>
+        <h1>Add Founder</h1>
+        <FounderForm onAddAuthor={onAddAuthor}/>
       </div>
     )
 }
   
-export default connect(() => {}, mapDispatchToProps)(AddAuthorForm);
+export default connect(() => {}, mapDispatchToProps)(AddFounderForm);
