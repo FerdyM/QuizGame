@@ -10,7 +10,7 @@ function Hero() {
     <div className="row">
       <div className="jumbotron col-10 offset-1">
         <h1>Founder Quiz</h1>
-        <p>What companies are these founders are responsible for creating!</p>
+        <p>What companies are these founders responsible for creating!</p>
       </div>
     </div>
 
@@ -40,6 +40,7 @@ function Turn({author, books, highlight, onAnswerSelected}) {
         <img src={author.imageUrl} className="authorimage" alt="Author" />
       </div>
       <div className="col-6">
+        <h1>{author.name}</h1>
         {books.map((title) => <Book title={title} key={title} onClick={onAnswerSelected} /> )}
       </div>
     </div>

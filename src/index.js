@@ -18,27 +18,33 @@ const authors = [
     books: [
       'Tesla',
       'SpaceX',
-      'X.com'
+      'The Boring Company',
+      'Neuralink'
     ]
   },
   {
-    name: 'Mark Cuban',
-    imageUrl: require('./images/elon.jpg'),
+    name: 'Mark Zuckerberg',
+    imageUrl: require('./images/mark.jpg'),
     imageSource: 'Wikipedia commons',
     books: [
-      'The adventures of huckleberry2',
-      'randocompany1',
-      'book32'
+      'Facebook',
     ]
   },
   {
-    name: 'Mark Twain3',
-    imageUrl: require('./images/elon.jpg'),
+    name: 'Bill Gates',
+    imageUrl: require('./images/bill.jpg'),
     imageSource: 'Wikipedia commons',
     books: [
-      'mcdonalds',
-      'ooft',
-      'bigooft'
+      'Microsoft',
+      'Gates Foundation',
+    ]
+  },
+  {
+    name: 'Daniel EK',
+    imageUrl: require('./images/daniel.jpg'),
+    imageSource: 'Wikipedia commons',
+    books: [
+      'Spotify',
     ]
   }
 ];
