@@ -82,32 +82,26 @@ function reducer(state = {authors, turnData: getTurnData(authors), highlight: ''
           turnData: getTurnData(state.authors),
         }
       )
+    case 'ADD_AUTHOR':
+      return Object.assign(
+        {},
+        state, {
+          authors: state.authors.concat([action.author])
+        }
+      )
     default: return state;
   }
 }
 
 let store = Redux.createStore(reducer);
 
-
-const AuthorWrapper = withRouter(({ history }) =>  
-  <AddAuthorForm onAddAuthor={(author) => {
-    authors.push(author);
-    history.push('/');
-  }} />
-)
-
-
-function App() {
-  return <ReactRedux.Provider store={store} >
-      <AuthorQuiz />
-    </ReactRedux.Provider>
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter >
-      <Route exact path="/" component={App} />
-      <Route path="/add" component={AuthorWrapper} />
+      <ReactRedux.Provider store={store} >
+        <Route exact path="/" component={AuthorQuiz} />
+        <Route path="/add" component={AddAuthorForm} />
+      </ReactRedux.Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
