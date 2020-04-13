@@ -12,33 +12,33 @@ import { render } from '@testing-library/react';
 
 const authors = [
   {
-    name: 'Mark Twain',
-    imageUrl: 'images/beach.svg',
+    name: 'Elon Musk',
+    imageUrl: require('./images/elon.jpg'),
     imageSource: 'Wikipedia commons',
     books: [
-      'The adventures of huckleberry',
-      'book2',
-      'book3'
+      'Tesla',
+      'SpaceX',
+      'X.com'
     ]
   },
   {
-    name: 'Mark Twain2',
-    imageUrl: 'images/beach.svg',
+    name: 'Mark Cuban',
+    imageUrl: require('./images/elon.jpg'),
     imageSource: 'Wikipedia commons',
     books: [
       'The adventures of huckleberry2',
-      'book22',
+      'randocompany1',
       'book32'
     ]
   },
   {
     name: 'Mark Twain3',
-    imageUrl: 'images/beach.svg',
+    imageUrl: require('./images/elon.jpg'),
     imageSource: 'Wikipedia commons',
     books: [
-      'The adventures of huckleberry3',
-      'book23',
-      'book33'
+      'mcdonalds',
+      'ooft',
+      'bigooft'
     ]
   }
 ];

@@ -9,8 +9,8 @@ function Hero() {
   return (
     <div className="row">
       <div className="jumbotron col-10 offset-1">
-        <h1>Author quiz</h1>
-        <p>Select the book written by the author!</p>
+        <h1>Founder Quiz</h1>
+        <p>What companies are these founders are responsible for creating!</p>
       </div>
     </div>
 
@@ -36,7 +36,7 @@ function Turn({author, books, highlight, onAnswerSelected}) {
   }
   return (
     <div className="row turn" style={{backgroundColor: hightlightToBgColor(highlight)}}>
-      <div className="col-4 offset-1">
+      <div className="col-4 offset-1 image-cont">
         <img src={author.imageUrl} className="authorimage" alt="Author" />
       </div>
       <div className="col-6">

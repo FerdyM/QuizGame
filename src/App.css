@@ -1,3 +1,12 @@
 .answer {
   background: lightblue;
 }
+
+.authorimage {
+  width: 100%;
+}
+
+.image-cont {
+  height: 400px;
+  overflow: hidden;
+}
