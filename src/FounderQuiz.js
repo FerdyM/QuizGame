@@ -7,7 +7,7 @@ import './bootstrap.min.css'
 function Header() {
   return (
     <div className="row">
-      <div className="jumbotron col-10 offset-1">
+      <div className="jumbotron col-10 offset-1 bg-dark text-white">
         <h1>Founder Quiz</h1>
         <p>What companies are these founders responsible for creating!</p>
       </div>
@@ -18,13 +18,13 @@ function Header() {
 
 function Company({title, onClick}) {
   return (
-    <div className="title" onClick={() => {onClick(title);}}>
-      <h4 className="answer">{title}</h4>
+    <div className="title bg-dark" onClick={() => {onClick(title);}}>
+      <h4 className="answer bg-dark text-white">{title}</h4>
     </div>
   )
 }
 
-function Turn({founder, companies, highlight, onAnswerSelected}) {
+function Turn({founder, companies, highlight, onAnswerSelected, onContinue, show}) {
   function hightlightToBgColor(highlight) {
     const mapping = {
       'none': '',
@@ -41,6 +41,8 @@ function Turn({founder, companies, highlight, onAnswerSelected}) {
       <div className="col-6">
         <h1>{founder.name}</h1>
         {companies.map((title) => <Company title={title} key={title} onClick={onAnswerSelected} /> )}
+        <p className="btn btn-dark"><Link to="/add" >Add an Author</Link></p>
+        <Continue className="btn btn-dark"show={highlight === 'correct'} onContinue={onContinue}/>
       </div>
     </div>
   )
@@ -52,7 +54,7 @@ function Continue({show, onContinue}) {
     <div className="row-continue">
       {show 
         ? <div className="col-11">
-            <button className="btn btn-primary btn-lg float-right" onClick={onContinue}>Continue</button>
+            <button className="btn btn-dark btn-lg float-right " onClick={onContinue}>Continue</button>
         </div>
         : null
       }
@@ -60,13 +62,6 @@ function Continue({show, onContinue}) {
   )
 }
 
-function Footer() {
- return (
-   <div id="footer" className="row">
-
-   </div>
- )
-}
 
 function mapStateToProps(state) {
   return {
@@ -91,10 +86,7 @@ const FounderQuiz = connect(mapStateToProps, mapDispatchToProps)(
     return (
       <div className="container-fluid">
         <Header />
-        <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected} />
-        <Continue show={highlight === 'correct'} onContinue={onContinue}/>
-        <p><Link to="/add" >Add an Author</Link></p>
-        <Footer />
+        <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected} show={highlight === 'correct'} onContinue={onContinue}/>     
       </div>
     );
 });
